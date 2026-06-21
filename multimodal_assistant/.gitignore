@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Logs
+bot.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Temp files
+temp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
