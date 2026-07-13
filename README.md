@@ -1,143 +1,135 @@
 # 🤖 Мультимодальный AI-ассистент
 
-Универсальный Telegram-бот с поддержкой различных типов контента: PDF-документов, изображений, текста и голосовых сообщений.
+<p align="center">
+  <img src="docs/project-preview.svg" alt="Превью мультимодального AI-ассистента" width="100%" />
+</p>
 
-## 🌟 Возможности
+Telegram-бот для работы с текстом, PDF-документами, изображениями и голосовыми сообщениями. Проект демонстрирует интеграцию нескольких AI-моделей в единый пользовательский сценарий.
 
-### 📄 Анализ PDF-документов
-- Загрузка и обработка PDF файлов
-- Извлечение и анализ текста
-- Генерация структурированных отчётов
-- Создание голосовых ответов
+## 🎯 Задача проекта
 
-### 🖼️ Работа с изображениями
-- **Анализ**: отправьте фото для детального описания
-- **Генерация**: используйте `/generate [описание]` для создания изображений с помощью DALL-E 3
+Создать универсального ассистента, который принимает контент разных типов, определяет нужный способ обработки и возвращает понятный текстовый или голосовой ответ.
 
-### 💬 Текстовое общение
-- Ответы на вопросы
-- Помощь с задачами
-- Поддержка контекста разговора
+## ✨ Функциональные блоки
 
-### 🎤 Голосовые сообщения
-- Распознавание речи (Speech-to-Text)
-- Текстовые ответы
-- Голосовые ответы (Text-to-Speech)
+- **Текстовый диалог** — ответы на вопросы и поддержка контекста.
+- **PDF-анализ** — извлечение текста, анализ документа и подготовка структурированного отчёта.
+- **Компьютерное зрение** — описание и анализ изображений.
+- **Генерация изображений** — команда `/generate <описание>`.
+- **Speech-to-Text** — распознавание голосовых сообщений.
+- **Text-to-Speech** — создание голосового ответа.
+- **Логирование** — запись событий и ошибок в консоль и `bot.log`.
 
-## 🚀 Быстрый старт
+## 🛠 Стек технологий
 
-### 1. Установка зависимостей
+| Направление | Технологии |
+|---|---|
+| Язык | Python 3.10+ |
+| Telegram | pyTelegramBotAPI |
+| LLM и Vision | OpenAI API, GPT-4o-mini |
+| Голос | Whisper, TTS |
+| Изображения | DALL·E |
+| PDF | PyPDF2 |
+| Конфигурация | python-dotenv, Pydantic |
 
-```bash
-cd multimodal_assistant
-pip install -r requirements.txt
-```
+## 🧩 Архитектура
 
-### 2. Настройка переменных окружения
-
-Скопируйте `.env.example` в `.env`:
-
-```bash
-cp .env.example .env
-```
-
-Откройте `.env` и укажите свои данные:
-
-```env
-OPENAI_API_KEY=sk-proj-your_key_here
-TELEGRAM_BOT_TOKEN=your_bot_token_here
-```
-
-### 3. Получение API ключей
-
-#### OpenAI API Key
-1. Перейдите на [platform.openai.com](https://platform.openai.com)
-2. Создайте новый API ключ
-
-#### Telegram Bot Token
-1. Найдите [@BotFather](https://t.me/BotFather) в Telegram
-2. Отправьте `/newbot`
-3. Скопируйте полученный токен
-
-### 4. Запуск бота
-
-```bash
-python main.py
+```mermaid
+flowchart LR
+    U[Пользователь Telegram] --> B[Telegram Bot]
+    B --> T[Text Handler]
+    B --> P[PDF Handler]
+    B --> I[Image Handler]
+    B --> V[Voice Handler]
+    T --> O[OpenAI Client]
+    P --> O
+    I --> O
+    V --> O
+    O --> R[Ответ пользователю]
 ```
 
 ## 📁 Структура проекта
 
-```
+```text
 multimodal_assistant/
 ├── handlers/
-│   ├── __init__.py
 │   ├── pdf_handler.py
 │   ├── image_handler.py
 │   ├── text_handler.py
 │   └── voice_handler.py
 ├── utils/
-│   ├── __init__.py
 │   ├── file_utils.py
 │   └── prompts.py
 ├── config.py
 ├── openai_client.py
 ├── main.py
 ├── .env.example
-├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
 
-## 🛠️ Технологии
+## 🖼 Демонстрация
 
-- **Python 3.10+**
-- **pyTelegramBotAPI** - Telegram API
-- **OpenAI API** - AI модели (GPT-4o-mini, Whisper-1, TTS-1, DALL-E 3)
-- **PyPDF2** - работа с PDF
-- **python-dotenv** - переменные окружения
-- **pydantic** - валидация конфигурации
+Изображение выше показывает основные пользовательские сценарии и AI-конвейер проекта. Для портфолио можно дополнительно добавить реальные скриншоты переписки в папку `docs/screenshots/`.
 
-## ⚙️ Конфигурация
+## 🚀 Запуск
 
-### Модели AI
+### 1. Клонировать репозиторий
 
-В `config.py`:
-
-```python
-text_model: str = "gpt-4o-mini"
-vision_model: str = "gpt-4o-mini"
-whisper_model: str = "whisper-1"
-tts_model: str = "tts-1"
-image_model: str = "dall-e-3"
+```bash
+git clone https://github.com/dimitry8st-prog/PEM_04-multimodal_assistant.git
+cd PEM_04-multimodal_assistant
 ```
 
-### Temperature
+### 2. Создать виртуальное окружение
 
-Установлена `temperature=0.2` для всех генераций текста для более точных и детерминированных ответов.
-
-## 📋 Логгирование
-
-Логи записываются в файл `bot.log` и выводятся в консоль. Формат:
-
-```
-2024-01-01 12:00:00 - module_name - INFO - Сообщение
+```bash
+python -m venv .venv
 ```
 
-## 🔒 Безопасность
+Windows:
 
-- Никогда не публикуйте `.env` с реальными ключами
-- Добавьте `.env` в `.gitignore`
+```bash
+.venv\Scripts\activate
+```
 
-## 🐛 Решение проблем
+Linux/macOS:
 
-### Бот не запускается
-- Проверьте токен в `.env`
-- Установите зависимости: `pip install -r requirements.txt`
+```bash
+source .venv/bin/activate
+```
 
-### Ошибки API
-- Проверьте баланс OpenAI API
-- Убедитесь, что ключ активен
+### 3. Установить зависимости
 
-## Лицензия
+```bash
+pip install -r requirements.txt
+```
 
-Учебный проект (PEM04 multimodal_assistant). Свободное использование в рамках задания.
+### 4. Настроить переменные окружения
+
+```bash
+cp .env.example .env
+```
+
+Заполнить `.env`:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+```
+
+### 5. Запустить
+
+```bash
+python main.py
+```
+
+## 🔐 Безопасность
+
+- Не публикуйте реальные API-ключи.
+- Храните `.env` в `.gitignore`.
+- Для production используйте отдельного Telegram-бота и ограничения расходов API.
+
+## 📌 Статус
+
+Учебный портфолио-проект. Возможные улучшения: база данных для истории, лимиты пользователей, Docker, тесты и панель администратора.
